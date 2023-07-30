@@ -2,8 +2,8 @@ WhittakerSmooth <- function(x,w,lambda,differences=1) {
   x=matrix(x,nrow = 1, ncol=length(x))
   L=length(x)
   E=Matrix::spMatrix(L,L,i=seq(1,L),j=seq(1,L),rep(1,L))
-  D=as(Matrix::diff(E,1,differences),"dgCMatrix")
-  W=as(Matrix::spMatrix(L,L,i=seq(1,L),j=seq(1,L),w),"dgCMatrix")
+  D=as(Matrix::diff(E,1,differences),"CsparseMatrix")
+  W=as(Matrix::spMatrix(L,L,i=seq(1,L),j=seq(1,L),w),"CsparseMatrix")
   background=Matrix::solve((W+lambda*Matrix::t(D)%*%D),Matrix::t((w*x)));
   return(as.vector(background))
 }
